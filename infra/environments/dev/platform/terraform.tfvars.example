@@ -1,0 +1,15 @@
+# Copy to terraform.tfvars (git-ignored). Platform-only values; shared values live in ../common.tfvars.
+# AWS credentials come from your AWS CLI profile (export AWS_PROFILE=...), never from this file.
+embedding_dimensions = 1024
+
+# Leave null for the first apply; set after scripts/sh/push_image.sh (see README).
+agent_image_tag = null
+
+# Role or user that runs scripts/create_index.py and scripts/seed_sample_data.py.
+indexer_principal_arns = ["arn:aws:iam::111122223333:role/example-claims-operator"]
+
+alarm_email = null
+
+# CORS origins for the web app. "*" accepts any origin (every request is still SigV4-signed or presigned);
+# narrow to the web stack output website_url, e.g. "http://<bucket>.s3-website-us-east-1.amazonaws.com".
+web_allowed_origins = ["*"]

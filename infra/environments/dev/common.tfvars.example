@@ -1,0 +1,12 @@
+# Copy to common.tfvars (git-ignored). Shared by ./foundation and ./platform; no secrets belong here.
+# AWS credentials come from your AWS CLI profile (export AWS_PROFILE=...), never from this file.
+region   = "us-east-1"
+app_name = "claims-investigator"
+
+# A Bedrock model or inference profile ID that is enabled in your account and Region.
+model_id = "REPLACE_WITH_ENABLED_MODEL_OR_INFERENCE_PROFILE_ID"
+
+embedding_model_id = "amazon.titan-embed-text-v2:0"
+
+# Optional private OpenSearch access (also attaches the VPC policy to the tools role in stage 1).
+opensearch_vpc_endpoint = null

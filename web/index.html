@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https:; form-action 'none'; base-uri 'none'; object-src 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <title>Claims Investigation Assistant</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script type="module" src="js/app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">CI</span>
+        <div>
+          <h1>Claims Investigation Assistant</h1>
+          <p class="subtitle">Asynchronous, advisory investigation of synthetic insurance claims</p>
+        </div>
+      </div>
+      <span id="connection-pill" class="pill pill-off">Not connected</span>
+    </header>
+
+    <div class="banner banner-advisory" role="note">
+      Advisory output only. This tool never approves, rejects, prices, or pays a claim, and never labels anyone
+      fraudulent. Potential anomaly signals always require human review. Use synthetic data only.
+    </div>
+    <div id="http-warning" class="banner banner-warning" role="alert" hidden>
+      This page is served over plain HTTP. Use short-lived temporary credentials scoped to
+      <code>execute-api:Invoke</code> only, on a network you trust, and forget them when done.
+    </div>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab active" role="tab" data-tab="connect" aria-selected="true">1. Connect</button>
+      <button class="tab" role="tab" data-tab="submit" aria-selected="false">2. New claim</button>
+      <button class="tab" role="tab" data-tab="jobs" aria-selected="false">3. Jobs &amp; reports</button>
+    </nav>
+
+    <main>
+      <section id="tab-connect" class="panel" role="tabpanel">
+        <h2>Connect to the API</h2>
+        <form id="connect-form" class="card" autocomplete="off">
+          <label>
+            API endpoint
+            <input id="api-endpoint" type="url" placeholder="https://abc123.execute-api.us-east-1.amazonaws.com" required />
+          </label>
+          <label>
+            Temporary credentials (JSON)
+            <textarea id="credentials-json" rows="7" spellcheck="false" placeholder='{"AccessKeyId": "ASIA...", "SecretAccessKey": "...", "SessionToken": "...", "Expiration": "..."}'></textarea>
+          </label>
+          <p class="hint">
+            Generate with <code>aws configure export-credentials --profile &lt;name&gt; --format process</code>.
+            Credentials stay in this tab's memory only; they are never stored or sent anywhere except as
+            request signatures to the API.
+          </p>
+          <div class="actions">
+            <button type="submit" class="primary">Connect</button>
+            <button type="button" id="forget-credentials" class="secondary">Forget credentials</button>
+          </div>
+          <p id="connect-status" class="muted"></p>
+        </form>
+      </section>
+
+      <section id="tab-submit" class="panel" role="tabpanel" hidden>
+        <h2>Submit a claim for investigation</h2>
+        <div class="card sample-bar">
+          <label>
+            Synthetic sample scenario
+            <select id="sample-select"><option value="">Loading samples...</option></select>
+          </label>
+          <button type="button" id="load-sample" class="secondary">Load sample</button>
+        </div>
+
+        <form id="claim-form" class="card" novalidate>
+          <div class="grid">
+            <label>
+              Claim ID
+              <span class="inline">
+                <input name="claim_id" required />
+                <button type="button" id="new-claim-id" class="secondary small">Generate</button>
+              </span>
+            </label>
+            <label>Policy reference <input name="policy_reference" placeholder="POL-SYN-1001" required /></label>
+            <label>
+              Claim type
+              <select name="claim_type" required></select>
+            </label>
+            <label>Incident date <input name="incident_date" type="date" required /></label>
+            <label>Reported date <input name="reported_date" type="date" required /></label>
+            <label>Claimed amount <input name="claimed_amount" inputmode="decimal" placeholder="1250.00" required /></label>
+            <label>Currency <input name="currency" maxlength="3" value="USD" required /></label>
+          </div>
+          <label>
+            Incident description
+            <textarea name="incident_description" rows="4" maxlength="4000" required></textarea>
+          </label>
+
+          <fieldset>
+            <legend>Documents</legend>
+            <table class="docs">
+              <thead>
+                <tr><th>File</th><th>Size</th><th>Document type</th><th>Content type</th><th></th></tr>
+              </thead>
+              <tbody id="documents"></tbody>
+            </table>
+            <label class="file-picker secondary">
+              Add documents
+              <input id="file-input" type="file" multiple accept=".txt,.csv,.json,text/plain,text/csv,application/json" />
+            </label>
+          </fieldset>
+
+          <ul id="form-errors" class="errors" hidden></ul>
+          <div class="actions">
+            <button type="submit" class="primary" id="submit-claim">Upload and submit</button>
+          </div>
+          <ol id="progress" class="progress"></ol>
+        </form>
+      </section>
+
+      <section id="tab-jobs" class="panel" role="tabpanel" hidden>
+        <h2>Jobs and reports</h2>
+        <form id="lookup-form" class="card inline-form" autocomplete="off">
+          <label>Claim ID <input name="claim_id" required /></label>
+          <label>Job ID <input name="job_id" required /></label>
+          <button type="submit" class="primary">Check status</button>
+        </form>
+
+        <div class="split">
+          <div class="card">
+            <div class="card-title">
+              <h3>Recent jobs (this browser)</h3>
+              <button type="button" id="clear-jobs" class="link">Clear</button>
+            </div>
+            <table class="jobs">
+              <thead><tr><th>Claim</th><th>Status</th><th>Submitted</th></tr></thead>
+              <tbody id="recent-jobs"></tbody>
+            </table>
+          </div>
+          <div class="card" id="job-detail">
+            <p class="muted">Select a job to see its status and report.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Synthetic data only. All findings are advisory and require qualified human review.
+    </footer>
+    <div id="toasts" aria-live="polite"></div>
+  </body>
+</html>

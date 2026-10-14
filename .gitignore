@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+dist/
+build/
+
+# Local configuration (never commit real values)
+.env
+.env.*
+!.env.example
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+crash.log
+terraform.tfvars
+!terraform.tfvars.example
+common.tfvars
+!common.tfvars.example
+backend.hcl
+!backend.hcl.example
+.terraform.tfstate.lock.info
+# Child modules may be initialised locally for editor schemas only.
+infra/modules/*/.terraform.lock.hcl
+
+# Editors / OS
+node_modules/
+.idea/
+.vscode/
+.DS_Store

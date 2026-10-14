@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "job_id": "3f1c7a2e-9b4d-5e6f-8a1b-2c3d4e5f6a7b",
+  "claim_id": "CLM-SYN-0001",
+  "correlation_id": "corr-synthetic-0001",
+  "status": "REVIEW_REQUIRED",
+  "executive_summary": "Synthetic example. One potential anomaly signal requires analyst review.",
+  "evidence_summary": [
+    {
+      "evidence_id": "meta:claimed_amount",
+      "source": "CLAIM_METADATA",
+      "locator": "submission field claimed_amount",
+      "description": "Submitted claimed amount"
+    },
+    {
+      "evidence_id": "doc:11111111-1111-4111-8111-111111111111#L4",
+      "source": "CLAIM_DOCUMENT",
+      "document_id": "11111111-1111-4111-8111-111111111111",
+      "locator": "L4",
+      "description": "total amount in repair estimate"
+    }
+  ],
+  "missing_information": [],
+  "anomaly_signals": [
+    {
+      "code": "AMOUNT_MISMATCH",
+      "description": "Amounts stated in the submission and documents differ and require review.",
+      "evidence_refs": ["meta:claimed_amount", "doc:11111111-1111-4111-8111-111111111111#L4"],
+      "confidence": 0.9,
+      "limitations": ["Differences may stem from data-entry or formatting errors."],
+      "origin": "RULE"
+    }
+  ],
+  "risk_indicators": [
+    {
+      "category": "AMOUNT_MISMATCH",
+      "level": "MEDIUM",
+      "rationale": "Potential anomaly signal AMOUNT_MISMATCH requires review.",
+      "basis": "EVIDENCE",
+      "evidence_refs": ["meta:claimed_amount"],
+      "confidence": 0.9
+    }
+  ],
+  "retrieved_sources": [
+    {
+      "source_id": "src:guidance-auto-001#c0",
+      "document_id": "guidance-auto-001",
+      "chunk_id": "guidance-auto-001#c0",
+      "source_type": "GUIDANCE",
+      "source_uri": "s3://example-bucket/sample-data/guidance/auto.md",
+      "title": "Synthetic auto guidance",
+      "score": 1.42,
+      "retrieval_method": "HYBRID"
+    }
+  ],
+  "recommended_analyst_actions": [
+    {
+      "action": "Request the itemised repair invoice.",
+      "rationale": "Confirms which amount is correct.",
+      "priority": "MEDIUM",
+      "evidence_refs": ["src:guidance-auto-001#c0"]
+    }
+  ],
+  "confidence": 0.62,
+  "limitations": ["Synthetic fixture."],
+  "human_review_required": true,
+  "review_reasons": ["ANOMALY_SIGNAL", "ELEVATED_RISK", "LOW_CONFIDENCE"],
+  "created_at": "2025-05-05T10:00:00Z",
+  "completed_at": "2025-05-05T10:04:00Z"
+}

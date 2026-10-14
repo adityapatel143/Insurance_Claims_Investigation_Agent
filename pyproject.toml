@@ -1,0 +1,87 @@
+[project]
+name = "insurance-claims-investigation-agent"
+version = "0.1.0"
+description = "Asynchronous, advisory-only insurance claims investigation assistant on Amazon Bedrock AgentCore (synthetic data only)."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "boto3>=1.43.105,<2",
+    "botocore>=1.43.105,<2",
+    "certifi>=2026.7.22",
+    "opensearch-py>=3.2.0,<4",
+    "pydantic>=2.13.5,<3",
+    "pydantic-settings>=2.15.0,<3",
+]
+
+[dependency-groups]
+agent = [
+    "bedrock-agentcore>=1.24.0,<2",
+    "httpx>=0.28.1,<1",
+    "strands-agents>=1.57.1,<2",
+]
+dev = [
+    "bandit>=1.9.4",
+    "boto3-stubs[bedrock-agentcore,bedrock-runtime,dynamodb,s3,sqs]>=1.43.105",
+    "detect-secrets>=1.5.0",
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.16.9",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.15,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.uv]
+# Local `uv sync`/`uv run` include agent deps; Lambda and image builds select groups explicitly.
+default-groups = ["dev", "agent"]
+
+[tool.uv.build-backend]
+module-name = "claims_investigator"
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "S", "N", "C4", "SIM", "RUF", "PL", "PT", "DTZ", "TID"]
+ignore = ["PLR0913"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106", "PLR2004", "PLR0917", "PLC0415"]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+mypy_path = "src"
+packages = ["claims_investigator"]
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra --strict-markers -m 'not integration'"
+markers = ["integration: requires a deployed stack and AWS credentials (opt-in)"]
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv"]
+
+[tool.coverage.run]
+source = ["claims_investigator"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80

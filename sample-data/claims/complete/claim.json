@@ -1,0 +1,17 @@
+{
+  "_notice": "SYNTHETIC SAMPLE DATA - fictional people, policies, and amounts. Not for production use.",
+  "scenario": "complete",
+  "claim_id_prefix": "CLM-SYN-AUTO",
+  "policy_reference": "POL-SYN-2001",
+  "claim_type": "AUTO",
+  "incident_date": "2026-08-14",
+  "reported_date": "2026-08-16",
+  "claimed_amount": "2480.00",
+  "currency": "USD",
+  "incident_description": "SYNTHETIC: While reversing out of a supermarket car park bay, the insured vehicle was struck on the rear passenger door by another slow-moving vehicle. No injuries were reported.",
+  "documents": [
+    {"file": "claim_form.txt", "document_type": "CLAIM_FORM", "content_type": "text/plain"},
+    {"file": "repair_estimate.csv", "document_type": "REPAIR_ESTIMATE", "content_type": "text/csv"},
+    {"file": "incident_report.json", "document_type": "INCIDENT_REPORT", "content_type": "application/json"}
+  ]
+}

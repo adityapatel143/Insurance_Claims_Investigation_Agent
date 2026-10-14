@@ -1,0 +1,42 @@
+name: security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python-security:
+    name: Bandit and secret detection
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.9.15"
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+
+      - name: Install dependencies (locked)
+        run: uv sync --locked
+
+      - name: Bandit
+        run: uv run bandit -q -r src scripts -c pyproject.toml
+
+      # New findings fail the job; audited false positives belong in .secrets.baseline.
+      - name: detect-secrets
+        run: git ls-files -z | xargs -0 uv run detect-secrets-hook --baseline .secrets.baseline

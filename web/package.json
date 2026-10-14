@@ -1,0 +1,9 @@
+{
+  "name": "claims-investigator-web",
+  "private": true,
+  "type": "module",
+  "description": "Static web app; no dependencies. Tests: node --test web/tests/",
+  "scripts": {
+    "test": "node --test tests/"
+  }
+}

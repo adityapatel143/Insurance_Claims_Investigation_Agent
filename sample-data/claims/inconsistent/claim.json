@@ -1,0 +1,16 @@
+{
+  "_notice": "SYNTHETIC SAMPLE DATA - fictional people, policies, and amounts. Not for production use.",
+  "scenario": "inconsistent",
+  "claim_id_prefix": "CLM-SYN-TRVL",
+  "policy_reference": "POL-SYN-4410",
+  "claim_type": "TRAVEL",
+  "incident_date": "2026-07-03",
+  "reported_date": "2026-08-25",
+  "claimed_amount": "1640.00",
+  "currency": "USD",
+  "incident_description": "SYNTHETIC: A fictional traveller's checked baggage did not arrive on an international flight and essential replacement items were purchased on arrival.",
+  "documents": [
+    {"file": "claim_form.txt", "document_type": "CLAIM_FORM", "content_type": "text/plain"},
+    {"file": "invoice.csv", "document_type": "INVOICE", "content_type": "text/csv"}
+  ]
+}

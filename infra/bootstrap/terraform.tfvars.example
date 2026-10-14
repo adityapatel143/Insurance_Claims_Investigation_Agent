@@ -1,0 +1,3 @@
+# AWS credentials come from your AWS CLI profile (export AWS_PROFILE=...), never from this file.
+region   = "us-east-1"
+app_name = "claims-investigator"

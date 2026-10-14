@@ -1,0 +1,12 @@
+SYNTHETIC SAMPLE DOCUMENT - fictional, not for production use.
+Form: Home contents and buildings claim form
+Claim Reference: SYN-PROP-3007
+Policy Number: POL-SYN-3007
+Policyholder: Jordan Sample (fictional)
+Property: Apartment 4, 12 Example Avenue, Synthetic City
+Date of Loss: 2026-09-02
+Cause: Escape of water from a failed appliance hose
+Claimed Amount: 6200.00
+Currency: USD
+Repair Estimate: to follow
+Photos: not supplied

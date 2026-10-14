@@ -1,0 +1,12 @@
+{
+  "note": "SYNTHETIC SAMPLE DOCUMENT - fictional",
+  "report_reference": "SYN-INC-5521",
+  "incident_date": "2026-08-14",
+  "incident_time": "17:40",
+  "location": "Example Street supermarket car park, Synthetic City",
+  "parties": {
+    "insured_vehicle": "SYN-0001",
+    "third_party_vehicle": "SYN-0002"
+  },
+  "summary": "Low-speed contact between two vehicles in a car park. Details exchanged at the scene."
+}

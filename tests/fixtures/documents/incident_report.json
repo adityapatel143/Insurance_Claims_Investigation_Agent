@@ -1,0 +1,6 @@
+{
+  "note": "SYNTHETIC TEST DATA - fictional",
+  "incident_date": "2025-05-02",
+  "location": "Example Synthetic City car park",
+  "officer": {"badge": "SYN-000"}
+}

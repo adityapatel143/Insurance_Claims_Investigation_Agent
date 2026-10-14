@@ -1,0 +1,76 @@
+[
+  {
+    "name": "get_claim_document_metadata",
+    "description": "Return metadata (type, content type, size, presence) for the documents submitted with the active investigation job. Does not return document content.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "job_id": {"type": "string", "description": "UUID of the active investigation job."},
+        "claim_id": {"type": "string", "description": "Claim identifier; must match the job. Pattern ^[A-Z0-9][A-Z0-9-]{3,63}$."},
+        "correlation_id": {"type": "string", "description": "Correlation ID of the job. Pattern ^[A-Za-z0-9-]{8,64}$."}
+      },
+      "required": ["job_id", "claim_id", "correlation_id"]
+    }
+  },
+  {
+    "name": "get_policy_guidance",
+    "description": "Retrieve synthetic investigation guidance chunks relevant to the query for the claim type. Returns an empty list when nothing relevant is indexed.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "job_id": {"type": "string", "description": "UUID of the active investigation job."},
+        "claim_id": {"type": "string", "description": "Claim identifier; must match the job."},
+        "correlation_id": {"type": "string", "description": "Correlation ID of the job."},
+        "claim_type": {"type": "string", "description": "One of AUTO, PROPERTY, TRAVEL."},
+        "query": {"type": "string", "description": "Retrieval query, 1-2000 characters."}
+      },
+      "required": ["job_id", "claim_id", "correlation_id", "claim_type", "query"]
+    }
+  },
+  {
+    "name": "search_similar_claims",
+    "description": "Retrieve synthetic historical claim examples similar to the query for the claim type. Returns an empty list when nothing relevant is indexed.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "job_id": {"type": "string", "description": "UUID of the active investigation job."},
+        "claim_id": {"type": "string", "description": "Claim identifier; must match the job."},
+        "correlation_id": {"type": "string", "description": "Correlation ID of the job."},
+        "claim_type": {"type": "string", "description": "One of AUTO, PROPERTY, TRAVEL."},
+        "query": {"type": "string", "description": "Retrieval query, 1-2000 characters."}
+      },
+      "required": ["job_id", "claim_id", "correlation_id", "claim_type", "query"]
+    }
+  },
+  {
+    "name": "persist_investigation_findings",
+    "description": "Validate and store the advisory investigation report for the active job, then record COMPLETED or REVIEW_REQUIRED. The status is derived from the validated report.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "job_id": {"type": "string", "description": "UUID of the active investigation job."},
+        "claim_id": {"type": "string", "description": "Claim identifier; must match the job."},
+        "correlation_id": {"type": "string", "description": "Correlation ID of the job."},
+        "result_json": {"type": "string", "description": "InvestigationResult schema_version 1.0 serialized as JSON."},
+        "report_markdown": {"type": "string", "description": "Human-readable Markdown rendering of the same result."}
+      },
+      "required": ["job_id", "claim_id", "correlation_id", "result_json", "report_markdown"]
+    }
+  },
+  {
+    "name": "update_job_status",
+    "description": "Record PROCESSING (from QUEUED) or FAILED (from QUEUED or PROCESSING) for the job. Cannot set COMPLETED or REVIEW_REQUIRED.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "job_id": {"type": "string", "description": "UUID of the investigation job."},
+        "claim_id": {"type": "string", "description": "Claim identifier; must match the job."},
+        "correlation_id": {"type": "string", "description": "Correlation ID of the job."},
+        "status": {"type": "string", "description": "PROCESSING or FAILED."},
+        "failure_category": {"type": "string", "description": "Required when status is FAILED: RUNTIME_ERROR, TIMEOUT, TOOL_ERROR, DEPENDENCY_UNAVAILABLE, INTERNAL."},
+        "processing_deadline": {"type": "string", "description": "ISO-8601 UTC deadline; used when status is PROCESSING."}
+      },
+      "required": ["job_id", "claim_id", "correlation_id", "status"]
+    }
+  }
+]

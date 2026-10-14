@@ -1,0 +1,29 @@
+module "platform" {
+  source = "../../../modules/platform"
+
+  region                      = var.region
+  environment                 = local.environment
+  app_name                    = var.app_name
+  log_level                   = var.log_level
+  lambda_package_path         = var.lambda_package_path
+  agent_image_tag             = var.agent_image_tag
+  model_id                    = var.model_id
+  embedding_model_id          = var.embedding_model_id
+  embedding_dimensions        = var.embedding_dimensions
+  indexer_principal_arns      = var.indexer_principal_arns
+  opensearch_vpc_endpoint     = var.opensearch_vpc_endpoint
+  alarm_email                 = var.alarm_email
+  web_allowed_origins         = var.web_allowed_origins
+  job_ttl_days                = local.settings.job_ttl_days
+  intake_retention_days       = local.settings.intake_retention_days
+  normalized_retention_days   = local.settings.normalized_retention_days
+  reports_retention_days      = local.settings.reports_retention_days
+  quarantine_retention_days   = local.settings.quarantine_retention_days
+  log_retention_days          = local.settings.log_retention_days
+  memory_event_expiry_days    = local.settings.memory_event_expiry_days
+  point_in_time_recovery      = local.settings.point_in_time_recovery
+  deletion_protection         = local.settings.deletion_protection
+  force_destroy               = local.settings.force_destroy
+  opensearch_standby_replicas = local.settings.opensearch_standby_replicas
+  max_upload_bytes            = local.settings.max_upload_bytes
+}

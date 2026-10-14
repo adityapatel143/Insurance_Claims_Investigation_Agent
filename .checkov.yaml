@@ -1,0 +1,24 @@
+# Checkov configuration for infra/. Each skip is a deliberate design decision; revisit before
+# production use with real data (see docs/threat-model.md).
+framework:
+  - terraform
+skip-check:
+  # The learning stack deliberately grants AdministratorAccess to workload roles.
+  - CKV_AWS_109
+  - CKV_AWS_111
+  - CKV_AWS_356
+  # Uploads are validated synchronously at POST /claims (ADR 0001); no S3 event notifications are used.
+  - CKV2_AWS_62
+  # Single-Region design; cross-Region replication is a documented future enhancement.
+  - CKV_AWS_144
+  # S3 server access logs are not enabled; use CloudTrail S3 data events for object-level audit.
+  - CKV_AWS_18
+  # Lambda DLQs apply to asynchronous invocation; these functions are invoked synchronously
+  # (API Gateway, AgentCore Gateway) or by an SQS event source mapping that has its own DLQ.
+  - CKV_AWS_116
+  # Lambda code signing is a documented future enhancement.
+  - CKV_AWS_272
+  # Point-in-time recovery and 1-year log retention are enabled for prod via environment settings;
+  # dev intentionally uses shorter retention and no PITR.
+  - CKV_AWS_28
+  - CKV_AWS_338

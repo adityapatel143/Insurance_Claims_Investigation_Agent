@@ -1,0 +1,11 @@
+SYNTHETIC SAMPLE DOCUMENT - fictional, not for production use.
+Form: Travel claim form
+Claim Reference: SYN-TRVL-4410
+Policy Number: POL-SYN-4410
+Traveller: Riley Placeholder (fictional)
+Trip: Synthetic City to Example Harbour, 2026-07-03 to 2026-07-17
+Date of Incident: 2026-07-03
+Event: Delayed baggage on arrival
+Claimed Amount: 1640.00
+Currency: USD
+Airline Reference: SYN-PIR-0099

@@ -1,0 +1,12 @@
+SYNTHETIC SAMPLE DOCUMENT - fictional, not for production use.
+Form: Motor claim form
+Claim Reference: SYN-AUTO-2001
+Policy Number: POL-SYN-2001
+Policyholder: Avery Example (fictional)
+Vehicle: 2019 synthetic compact hatchback, registration SYN-0001
+Date of Loss: 2026-08-14
+Location: Example Street supermarket car park, Synthetic City
+Claimed Amount: 2480.00
+Currency: USD
+Description: Rear passenger door dented and scraped by another vehicle at low speed.
+Third Party Vehicle: synthetic van, registration SYN-0002

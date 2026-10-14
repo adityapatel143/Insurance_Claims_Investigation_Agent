@@ -1,0 +1,7 @@
+SYNTHETIC TEST DATA - fictional, not for production use.
+Claim ID: CLM-SYN-0001
+Policy Number: POL-SYN-1001
+Claimant: Fictional Person A
+Date of Loss: 2025-05-02
+Claimed Amount: 1250.00
+Vehicle: Synthetic hatchback, rear bumper damage after low-speed collision in a car park.

@@ -1,0 +1,15 @@
+{
+  "_notice": "SYNTHETIC SAMPLE DATA - fictional people, policies, and amounts. Not for production use.",
+  "scenario": "missing-documents",
+  "claim_id_prefix": "CLM-SYN-PROP",
+  "policy_reference": "POL-SYN-3007",
+  "claim_type": "PROPERTY",
+  "incident_date": "2026-09-02",
+  "reported_date": "2026-09-03",
+  "claimed_amount": "6200.00",
+  "currency": "USD",
+  "incident_description": "SYNTHETIC: A washing-machine hose failed overnight and water spread across the kitchen floor of a fictional apartment, damaging flooring and lower cabinets.",
+  "documents": [
+    {"file": "claim_form.txt", "document_type": "CLAIM_FORM", "content_type": "text/plain"}
+  ]
+}
